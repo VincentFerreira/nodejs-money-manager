@@ -18,4 +18,6 @@ $(document).ready(function () {
     'width':'280px'
   });
 
+  $('.dropdown-toggle').dropdown();
+  
 });

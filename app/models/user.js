@@ -10,6 +10,7 @@ var UserSchema = new Schema({
     name: String
   , email: String
   , username: String
+	, locale: String
   , provider: String
   , hashed_password: String
   , salt: String
@@ -52,6 +53,12 @@ UserSchema.path('username').validate(function (username) {
   if (authTypes.indexOf(this.provider) !== -1) return true
   return username.length
 }, 'Username cannot be blank')
+
+UserSchema.path('locale').validate(function (locale) {
+  // if you are authenticating by any of the oauth strategies, don't validate
+  if (authTypes.indexOf(this.provider) !== -1) return true
+  return locale.length
+}, 'Locale cannot be blank')
 
 
 // pre save hooks

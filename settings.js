@@ -5,6 +5,7 @@
 
 var express = require('express')
   , mongoStore = require('connect-mongodb')
+  , lingua = require('lingua')
 
 exports.boot = function(app, config, passport){
   bootApplication(app, config, passport)
@@ -26,6 +27,10 @@ function bootApplication(app, config, passport) {
 
   app.configure(function () {
     // dynamic helpers
+    app.use(lingua(app, {
+      defaultLocale: 'en',
+      path: __dirname + '/i18n'
+    }));
     app.use(function (req, res, next) {
       res.locals.appName = 'Nodejs Express Mongoose Demo'
       res.locals.title = 'Nodejs Express Mongoose Demo'

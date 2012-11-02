@@ -1,5 +1,11 @@
 body {
-  padding-top: 60px;
+	position: relative;
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.centered{
+	text-align:center;
 }
 
 .date {

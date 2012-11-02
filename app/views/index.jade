@@ -1,0 +1,34 @@
+﻿extends /layouts/default
+
+block content
+  div(class='container')
+    // Main hero unit for a primary marketing message or call to action
+    div(class='row')
+     div(class='span12')
+      div(class='hero-unit')
+        img(src='img/money.png', style='float:left;height:180px;margin-right:40px;')
+        h1 GAEL
+        p
+         | Gestionnaire d'Argent En Ligne ;-)
+        p
+         a(href="/login", title="Login",id='btn-connexion', class='btn btn-primary btn-large') Connexion
+         | 
+         a(href="/signup", title="Sign up", id='btn-signup', class='btn btn-large') Inscription
+    // Example row of columns
+    div(class='row')
+      div(class='span4')
+        div(class='well centered')
+         h2 Déclarez
+         img(src='img/pencil.png', class='png_shadow')		
+         p Entrez vos débits ou crédits passés et à venir.
+         // p <a class="btn" href="#">View details &raquo;</a>
+      div(class='span4')
+        div(class='well centered')
+         h2 Surveillez
+         img(src='img/chart_bar_up.png', class='png_shadow') 
+         p Anticipez vos futures dépenses: Suivez l'état de vos comptes avec le tableau récapitulatif <br/> ou grâce au graphique prévisionnel. 
+      div(class='span4')
+        div(class='well centered')
+         h2 Partagez
+         img(src='img/man.png', class='png_shadow')
+         p Créez des comptes communs avec d'autres utilisateurs afin de toujours savoir qui vous doit de l'argent !

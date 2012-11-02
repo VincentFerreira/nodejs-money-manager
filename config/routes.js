@@ -76,7 +76,11 @@ module.exports = function (app, passport, auth) {
   })
 
   // home route
-  app.get('/', articles.index)
+  app.get('/', function(req,res){
+	res.render('index', {
+		title: 'Sign up'
+	})
+  })
 
   // comment routes
   var comments = require('../app/controllers/comments')
