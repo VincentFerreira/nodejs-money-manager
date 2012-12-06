@@ -1,31 +1,33 @@
-
-header#header
-  .navbar.navbar-fixed-top(role='navigation')
-    .navbar-inner
-      .container
-        a.brand(href='/') G.A.E.L
-        .nav-collapse.collapse
-          ul.nav
-            if (req.isAuthenticated())
-              li
-                a(href='/articles', title="article listing") #{lingua.calendar}
-              li
-                a(href="/articles/new", title="new article") New
-              li
-                a(href="https://github.com/madhums/nodejs-express-mongoose-demo", title="fork me on github") FORK ME ON GITHUB
-          ul.nav.pull-right
-            if (req.isAuthenticated())
-              li
-                a(href="/users/"+req.user.id, title="Profile") Profile
-              li
-                a(href="/logout", title="logout") Logout
-            else
-              li
-                a(href="/login", title="Login") Login
-            a.btn.btn-primary.dropdown-toggle(data-toggle="dropdown", href="#") #{lingua["default-language"]}
-              span.caret
-            ul.dropdown-menu.pull-right(role="menu", arial-labelledby="dLabel")
-              li
-                a(href="?language=en") English
-              li
-                a(href="?language=fr") French
+.navbar(role='navigation')
+  .navbar-inner
+    .container
+      a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+       span.icon-bar
+       span.icon-bar
+       span.icon-bar
+      a.brand(href='/') G.A.E.L
+      .nav-collapse.collapse
+        ul.nav
+          if (req.isAuthenticated())
+            li
+              a(href='/articles', title="article listing") #{lingua.calendar}
+            li
+              a(href="/articles/new", title="new article") New
+            li
+              a(href="https://github.com/madhums/nodejs-express-mongoose-demo", title="fork me on github") FORK ME ON GITHUB
+        ul.nav.pull-right
+          if (req.isAuthenticated())
+            li
+              a(href="/users/"+req.user.id, title="Profile") Profile
+            li
+              a(href="/logout", title="logout") Logout
+          else
+            li
+              a(href="/login", title="Login") Login
+          a.btn.btn-primary.dropdown-toggle(data-toggle="dropdown", href="#") #{lingua["default-language"]}
+            span.caret
+          ul.dropdown-menu.pull-right(role="menu", arial-labelledby="dLabel")
+            li
+              a(href="?language=en") English
+            li
+              a(href="?language=fr") French
