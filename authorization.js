@@ -24,6 +24,18 @@ exports.user = {
     }
 }
 
+/*
+ *  Account authorizations routing middleware
+ */
+
+exports.account = {
+    hasAuthorization : function (req, res, next) {
+      if (req.account.user._id != req.user.id) {
+        return res.redirect('/')
+      }
+      next()
+    }
+}
 
 /*
  *  Article authorizations routing middleware

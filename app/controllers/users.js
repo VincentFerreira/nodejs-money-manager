@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
+  , Account = mongoose.model('Account')
 
 exports.signin = function (req, res) {}
 
@@ -39,6 +40,12 @@ exports.create = function (req, res) {
   user.provider = 'local'
   user.save(function (err) {
     if (err) return res.render('users/signup', { errors: err.errors })
+    //first account creation  
+    var account = new Account({name:'my first account'})
+    account.user = user
+    account.save(function (err) {
+      if (err) return res.render('users/signup', { errors: err.errors })
+    })
     req.logIn(user, function(err) {
       if (err) return next(err)
       return res.redirect('/')

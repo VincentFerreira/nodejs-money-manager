@@ -2,7 +2,10 @@
 var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , User = mongoose.model('User')
+  , Account = mongoose.model('Account')
+  , Operation = mongoose.model('Operation')
   , async = require('async')
+  , ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = function (app, passport, auth) {
 
@@ -13,7 +16,7 @@ module.exports = function (app, passport, auth) {
   app.get('/logout', users.logout)
   app.post('/users', users.create)
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-  app.get('/users/:userId', users.show)
+  app.get('/users/:userId', auth.user.hasAuthorization, users.show)
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin)
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
   app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin)
@@ -34,6 +37,28 @@ module.exports = function (app, passport, auth) {
       })
   })
 
+  // account routes
+  var accounts = require('../app/controllers/accounts')
+  app.get('/users/:accountUserId/account', auth.requiresLogin, auth.account.hasAuthorization, accounts.show) // account resume
+  
+  app.param('accountUserId', function (req, res, next, id) {
+    Account.findOne({ 'user._id' : new ObjectId(id) })
+      .exec(function (err, account) {
+        if (err) return next(err)
+        if (!account) return next(new Error('Failed to load Account ' + id))
+        req.account = account
+        next()
+      })
+  })
+  
+  //var accounts = require('../app/controllers/operations')
+  //app.get('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
+  //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
+  //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
+  //app.del('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
+  
+  //TODO app.param('accountId', function(req, res, next, id){ ...
+  
   // article routes
   var articles = require('../app/controllers/articles')
   app.get('/articles', articles.index)
@@ -47,8 +72,8 @@ module.exports = function (app, passport, auth) {
   app.param('id', function(req, res, next, id){
     Article
       .findOne({ _id : id })
-      .populate('user', 'name')
-      .populate('comments')
+      .populate('user', 'name') //ajoute a l'article trouvé l'objet user avec seulement sa valeur de 'name'
+      .populate('comments') // ajoute les objets comments à l'article trouvé
       .exec(function (err, article) {
         if (err) return next(err)
         if (!article) return next(new Error('Failed to load article ' + id))

@@ -10,7 +10,7 @@
         ul.nav
           if (req.isAuthenticated())
             li
-              a(href='/articles', title="article listing") #{lingua.calendar}
+              a(href="/users/"+req.user.id+"/account", title="article listing") #{lingua.account}
             li
               a(href="/articles/new", title="new article") New
             li
