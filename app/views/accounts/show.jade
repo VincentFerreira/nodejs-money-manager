@@ -1,5 +1,26 @@
 extends ../layouts/default
 
 block content
-  p=account.name
-
+  div.container
+    div.row
+     div.span3
+       div.well.sidebar-nav
+         ul.nav.nav-list
+           li.nav-header List header
+           li
+             a(href='db/admin')
+               i.icon-folder-open
+               span View Database
+           li
+             a(href='db/admin')
+               i.icon-folder-open
+               span View Database
+           li
+             a(href='db/admin')
+               i.icon-folder-open
+               span View Database
+     div.span9
+       h2=account.name
+       #operation-editor-container
+        form
+       #list-operations

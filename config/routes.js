@@ -51,7 +51,7 @@ module.exports = function (app, passport, auth) {
       })
   })
   
-  //var accounts = require('../app/controllers/operations')
+  var accounts = require('../app/controllers/operations')
   //app.get('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
   //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
   //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
