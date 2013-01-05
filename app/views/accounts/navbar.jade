@@ -1,0 +1,29 @@
+﻿
+div.well.sidebar-nav
+ ul.nav.nav-list
+   li.nav-header #{lingua.accountList}
+   each account, i in accounts
+     - var klass = (account.id === req.param('accountId') ? 'active' : '')
+     li(class=klass)
+      a(href='#account'+i+'-nav', data-toggle='collapse')
+        i.icon-book
+        span=account.name
+     li
+       - var inklass = (account.id === req.param('accountId') ? 'in' : '')
+       ul.collapse.nav.nav-list(id='account'+i+'-nav', class=inklass)
+         li
+           a(href='/users/'+req.user.id+'/accounts/'+account.id+'/operations')
+             i.icon-list-alt
+             | #{lingua.accountOperations}
+         li
+           a(href='#graph-compte'+i)
+             i.icon-tasks
+             | #{lingua.accountGraphs}
+         li
+           a(href='#graph-compte'+i)
+             i.icon-wrench
+             | #{lingua.accountSettings}
+   li
+     a.btn(href='#add-compte')
+       i.icon-plus
+       | Ajouter compte

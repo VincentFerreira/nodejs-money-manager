@@ -23,6 +23,7 @@ function bootApplication(app, config, passport) {
 
   // set views path, template engine and default layout
   app.set('views', __dirname + '/app/views')
+  app.set('view options', { layout: false })
   app.set('view engine', 'jade')
 
   app.configure(function () {
