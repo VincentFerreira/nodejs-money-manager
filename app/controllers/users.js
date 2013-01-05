@@ -31,7 +31,7 @@ exports.logout = function (req, res) {
 
 // session
 exports.session = function (req, res) {
-  res.redirect('/')
+  res.redirect("/users/"+req.user.id+"/account")
 }
 
 // signup
