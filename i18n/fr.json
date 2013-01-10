@@ -1,5 +1,13 @@
 {
   "default-language" : "FR",
   "calendar": "Calendrier",
-  "account": "Compte"
+  "accounts": "Comptes",
+  "profile": "Profil",
+  "login": "Se connecter",
+  "logout": "Se d\u00E9connecter",
+  "accountList": "Liste de comptes",
+  "accountOperations":"Op\u00E9rations",
+  "accountGraphs":"Graphiques",
+  "accountSettings":"R\u00E9glages",
+  "addAccount":"Ajouter compte"
 }

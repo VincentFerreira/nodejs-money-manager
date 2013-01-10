@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 // show operations
 exports.show = function (req, res) {
   console.log(req.accounts)
-  res.render('accounts/operations', {
+  res.render('accounts/graphs', {
       title: 'operations'
     , accounts : req.accounts
   })

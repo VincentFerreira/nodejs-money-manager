@@ -8,19 +8,26 @@ block content
          ul.nav.nav-list
            li.nav-header List header
            li
-             a(href='db/admin')
+             a(href='#compte1', data-toggle='collapse')
                i.icon-folder-open
                span View Database
+           #compte1.collapse
+             li
+               a(href='#ope-compte1')
+                 i.icon-folder-open
+                 span View Database
+             li
+               a(href='#ope-compte1')
+                 i.icon-folder-open
+                 span View Database
            li
              a(href='db/admin')
                i.icon-folder-open
                span View Database
            li
-             a(href='db/admin')
+             a(href='#add-compte')
                i.icon-folder-open
-               span View Database
+               span Ajouter compte
      div.span9
-       h2=account.name
-       #operation-editor-container
-        form
-       #list-operations
+       block second-content
+         h2 Account Resume

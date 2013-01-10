@@ -33,29 +33,41 @@ module.exports = function (app, passport, auth) {
         if (err) return next(err)
         if (!user) return next(new Error('Failed to load User ' + id))
         req.profile = user
-        next()
+        
+        Account
+            .find({ 'user._id' : new ObjectId(req.user.id) })
+            .exec(function (err, accounts) {
+                if (err) return next(err)
+                if (!accounts) return next(new Error('Failed to load Accounts for user ' + id))
+                req.accounts = accounts
+                next()                
+        })
       })
   })
 
   // account routes
   var accounts = require('../app/controllers/accounts')
-  app.get('/users/:accountUserId/account', auth.requiresLogin, auth.account.hasAuthorization, accounts.show) // account resume
+  app.get('/users/:userId/accounts', auth.requiresLogin, auth.user.hasAuthorization, accounts.resume) // accounts resume
+    
+  var operations = require('../app/controllers/operations')
+  app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
+  //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
+  //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
+  //app.del('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
-  app.param('accountUserId', function (req, res, next, id) {
-    Account.findOne({ 'user._id' : new ObjectId(id) })
+  var graphs = require('../app/controllers/graphs')
+  app.get('/users/:userId/accounts/:accountId/graphs', auth.requiresLogin, auth.account.hasAuthorization, graphs.show)   
+  
+    app.param('accountId', function (req, res, next, id) {
+    Account.findOne({ _id : id })
       .exec(function (err, account) {
         if (err) return next(err)
         if (!account) return next(new Error('Failed to load Account ' + id))
         req.account = account
         next()
       })
+    //todo ajouter les operations
   })
-  
-  var accounts = require('../app/controllers/operations')
-  //app.get('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
-  //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
-  //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
-  //app.del('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
   //TODO app.param('accountId', function(req, res, next, id){ ...
   
