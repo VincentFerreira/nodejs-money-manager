@@ -9,5 +9,7 @@
   "accountOperations":"Op\u00E9rations",
   "accountGraphs":"Graphiques",
   "accountSettings":"R\u00E9glages",
-  "addAccount":"Ajouter compte"
+  "addAccount":"Ajouter compte",
+  "name" : "Nom",
+  "save" : "Sauvegarder"
 }

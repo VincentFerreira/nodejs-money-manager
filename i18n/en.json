@@ -9,5 +9,7 @@
   "accountOperations":"Operations",
   "accountGraphs":"Graphs",
   "accountSettings":"Settings",
-  "addAccount":"Add account"
+  "addAccount":"Add account",
+  "name" : "Name",
+  "save" : "Save changes"
 }

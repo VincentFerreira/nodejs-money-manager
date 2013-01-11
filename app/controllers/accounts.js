@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
   , Account = mongoose.model('Account')
   , ObjectId = require('mongoose').Types.ObjectId
+  , _ = require('underscore')
   
   
 // resume accounts
@@ -14,6 +15,37 @@ exports.resume = function (req, res) {
           , accounts: accounts
         })
       })
+}
+  
+// Create an account
+exports.create = function (req, res) {
+  var account = new Account(req.body)
+  account.user = req.user
+
+  account.save(function(err){
+    if (err) return next(err)
+    res.redirect('/users/'+req.user.id+'/accounts/'+account.id+'/operations')
+  })
+}  
+  
+// Update account
+exports.update = function(req, res){
+  var account = req.account
+
+  account = _.extend(account, req.body)
+
+  account.save(function(err, doc) {
+    if (err) {
+      res.render('accounts/settings', {
+        title: 'operations'
+        , accounts : req.accounts
+        , errors: err.errors
+      })
+    }
+    else {
+      res.redirect('/users/'+req.user.id+'/accounts/'+req.account.id+'/settings')
+    }
+  })
 }
   
 // show account

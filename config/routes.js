@@ -40,7 +40,7 @@ module.exports = function (app, passport, auth) {
                 if (err) return next(err)
                 if (!accounts) return next(new Error('Failed to load Accounts for user ' + id))
                 req.accounts = accounts
-                next()                
+                next() 
         })
       })
   })
@@ -48,7 +48,9 @@ module.exports = function (app, passport, auth) {
   // account routes
   var accounts = require('../app/controllers/accounts')
   app.get('/users/:userId/accounts', auth.requiresLogin, auth.user.hasAuthorization, accounts.resume) // accounts resume
-    
+  app.post('/users/:userId/account/', auth.requiresLogin, auth.user.hasAuthorization, accounts.create) // add account
+  app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update)
+  
   var operations = require('../app/controllers/operations')
   app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
   //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
@@ -57,8 +59,12 @@ module.exports = function (app, passport, auth) {
   
   var graphs = require('../app/controllers/graphs')
   app.get('/users/:userId/accounts/:accountId/graphs', auth.requiresLogin, auth.account.hasAuthorization, graphs.show)   
+    
+  var settings = require('../app/controllers/settings')
+  app.get('/users/:userId/accounts/:accountId/settings', auth.requiresLogin, auth.account.hasAuthorization, settings.show)   
   
-    app.param('accountId', function (req, res, next, id) {
+  
+  app.param('accountId', function (req, res, next, id) {
     Account.findOne({ _id : id })
       .exec(function (err, account) {
         if (err) return next(err)

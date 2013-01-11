@@ -6,4 +6,19 @@ block content
       div.span3
         include ../accounts/navbar
       div.span9
-        h2=lingua.accountSettings
+        h2
+          strong #{req.account.name}
+          | : #{lingua.accountSettings}
+        
+        form.form-horizontal(method='POST', action='/users/'+req.user.id+'/accounts/'+req.account.id)
+          input(type="hidden", name="_method", value="PUT")
+          div.control-group
+            label.control-label(for='inputName') #{lingua.name}
+            div.controls
+              input(type='text', id='inputName', name='name', value=req.account.name, placeholder=lingua.name)
+          div.control-group
+            div.controls
+              button(class='btn btn-danger') Delete account
+              span.help-inline Supprime le compte ainsi que toutes les opérations qui lui sont attachées
+          div.form-actions
+            button(type='submit', class='btn btn-primary') Save changes

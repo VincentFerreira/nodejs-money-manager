@@ -6,4 +6,6 @@ block content
       div.span3
         include ../accounts/navbar
       div.span9
-        h2=lingua.accountOperations
+        h2
+          strong #{req.account.name}
+          | : #{lingua.accountOperations}

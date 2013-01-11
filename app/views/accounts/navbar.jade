@@ -20,7 +20,7 @@ div.well.sidebar-nav
              i.icon-tasks
              | #{lingua.accountGraphs}
          li
-           a(href='#graph-compte'+i)
+           a(href='/users/'+req.user.id+'/accounts/'+account.id+'/settings')
              i.icon-wrench
              | #{lingua.accountSettings}
    li
@@ -29,15 +29,14 @@ div.well.sidebar-nav
        | #{lingua.addAccount}
 
 div(class='modal fade', id='add-compte')
-  form(method='post', action='')
+  form(method='post', action='/users/'+req.user.id+'/account/')
 
     div.modal-header
       button.close(data-dismiss='modal')×
       h3 #{lingua.addAccount}
 
     div.modal-body
-      textarea#document(name='document')
-        {"_id": ObjectID()}
+      textarea#accountName(name='name')
 
     div.modal-footer
       button(class='btn btn-error', data-dismiss='modal') Close
