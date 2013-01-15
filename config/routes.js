@@ -49,7 +49,9 @@ module.exports = function (app, passport, auth) {
   var accounts = require('../app/controllers/accounts')
   app.get('/users/:userId/accounts', auth.requiresLogin, auth.user.hasAuthorization, accounts.resume) // accounts resume
   app.post('/users/:userId/account/', auth.requiresLogin, auth.user.hasAuthorization, accounts.create) // add account
-  app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update)
+  app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update) //update account settings
+  app.del('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.destroy) //delete account
+  
   
   var operations = require('../app/controllers/operations')
   app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 

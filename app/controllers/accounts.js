@@ -48,6 +48,18 @@ exports.update = function(req, res){
   })
 }
   
+// Delete an account
+exports.destroy = function(req, res){
+  var account = req.account
+  console.log('DELETING : '+account)
+  account.remove(function(err){
+    // req.flash('notice', 'Deleted successfully')
+    if (err) return next(err)
+    req.session.success = 'Account deleted!';
+    res.redirect('/users/'+req.user.id+'/accounts')
+  })
+}
+  
 // show account
 exports.show = function (req, res) {
   var account = req.account

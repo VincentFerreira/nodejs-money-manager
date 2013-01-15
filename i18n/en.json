@@ -10,6 +10,12 @@
   "accountGraphs":"Graphs",
   "accountSettings":"Settings",
   "addAccount":"Add account",
+  "deleteAccount" : {
+    "title" : "Delete account",
+    "description" : "Are you sure you want to delete account {name} ?"
+  },
   "name" : "Name",
-  "save" : "Save changes"
+  "save" : "Save changes",
+  "delete" : "Delete",
+  "close" : "Close"
 }

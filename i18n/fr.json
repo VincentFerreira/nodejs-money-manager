@@ -9,7 +9,13 @@
   "accountOperations":"Op\u00E9rations",
   "accountGraphs":"Graphiques",
   "accountSettings":"R\u00E9glages",
-  "addAccount":"Ajouter compte",
+  "addAccount":"Ajouter un compte",
+  "deleteAccount" : {
+    "title" : "Supprimer le compte",
+    "description" : "Etes vous sure de vouloir supprimer le compte {name} ?"
+  },
   "name" : "Nom",
-  "save" : "Sauvegarder"
+  "save" : "Sauvegarder",
+  "delete" : "Supprimer",
+  "close" : "Fermer"
 }

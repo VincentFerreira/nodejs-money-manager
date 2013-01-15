@@ -9,6 +9,7 @@ var express = require('express')
 
 exports.boot = function(app, config, passport){
   bootApplication(app, config, passport)
+    
 }
 
 // App settings and middleware
@@ -31,12 +32,13 @@ function bootApplication(app, config, passport) {
     app.use(lingua(app, {
       defaultLocale: 'en',
       path: __dirname + '/i18n'
-    }));
+    }))
     app.use(function (req, res, next) {
-      res.locals.appName = 'Nodejs Express Mongoose Demo'
-      res.locals.title = 'Nodejs Express Mongoose Demo'
-      res.locals.showStack = app.showStackError
+      res.locals.appName = 'G.A.E.L'
+      res.locals.title = 'G.A.E.L'
+      res.locals.showStack = app.showStackError    
       res.locals.req = req
+
       res.locals.formatDate = function (date) {
         var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ]
         return monthNames[date.getMonth()]+' '+date.getDate()+', '+date.getFullYear()
@@ -65,6 +67,7 @@ function bootApplication(app, config, passport) {
         return str
       }
 
+
       next()
     })
 
@@ -88,6 +91,21 @@ function bootApplication(app, config, passport) {
 
     app.use(express.favicon())
 
+    //Error flash messages
+    app.use(function(req, res, next){
+      res.locals.messageSuccess = ''
+      res.locals.messageError = ''
+      if (req.session.success) {
+        res.locals.messageSuccess = req.session.success
+        delete req.session.success
+      }
+      if (req.session.error) {
+        res.locals.messageError = req.session.error
+        delete req.session.error
+      }
+      next()
+    })
+    
     // routes should be at the last
     app.use(app.router)
 
