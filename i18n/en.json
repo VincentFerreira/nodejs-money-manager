@@ -14,8 +14,18 @@
     "title" : "Delete account",
     "description" : "Are you sure you want to delete account {name} ?"
   },
+  "operation" : {
+    "name" : "Name",
+    "amount" : "Amount",
+    "type" : "Type",
+    "repeat" : "Repeat",
+    "date" : "Date",
+    "typeDebit" : "Debit",
+    "typeCredit" : "Credit"
+  },
   "name" : "Name",
   "save" : "Save changes",
   "delete" : "Delete",
-  "close" : "Close"
+  "close" : "Close",
+  "add" : "Add"
 }

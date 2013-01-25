@@ -1,10 +1,30 @@
 script(type='text/javascript', src='/js/jquery.min.js')
-script(type='text/javascript', src='/js/bootstrap.min.js')
+<!-- Fuel UX CDN link to its javascript library -->
+script(src="http://fuelcdn.com/fuelux/2.2/loader.min.js", type="text/javascript") 
+<!-- script(type='text/javascript', src='/js/bootstrap.min.js') -->
 script(type='text/javascript', src='/js/bootbox.js')
 script(type='text/javascript', src='/js/jquery.tagsinput.min.js')
-script(type='text/javascript', src='/js/backbone.js')
-script(type='text/javascript', src='/js/app.js')
+
+script(type='text/javascript', src='/js/app.js') 
 script(type="text/javascript")
+
+  $.fn.serializeObject = function()
+  {
+     var o = {};
+     var a = this.serializeArray();
+     $.each(a, function() {
+         if (o[this.name]) {
+             if (!o[this.name].push) {
+                 o[this.name] = [o[this.name]];
+             }
+             o[this.name].push(this.value || '');
+         } else {
+             o[this.name] = this.value || '';
+         }
+     });
+     return o;
+  };
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-25468002-1']);
   _gaq.push(['_trackPageview']);
@@ -15,3 +35,7 @@ script(type="text/javascript")
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+block pageScript
+  
+
+    

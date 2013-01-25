@@ -19,6 +19,7 @@ exports.resume = function (req, res) {
   
 // Create an account
 exports.create = function (req, res) {
+  console.log(req.body)
   var account = new Account(req.body)
   account.user = req.user
 

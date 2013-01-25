@@ -7,3 +7,12 @@ block content
         include ../accounts/navbar
       div.span9
         h2 Account Resume
+        
+
+block pageScript
+  script
+    (function() {
+      $("#add-compte").modal('hide');
+      $("#delete-account").modal('hide');
+    })();
+  

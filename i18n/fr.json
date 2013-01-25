@@ -14,8 +14,18 @@
     "title" : "Supprimer le compte",
     "description" : "Etes vous sure de vouloir supprimer le compte {name} ?"
   },
+  "operation" : {
+    "name" : "Nom",
+    "amount" : "Montant",
+    "type" : "Type",
+    "repeat" : "Repetition",
+    "date" : "Date",
+    "typeDebit" : "D\u00E9bit",
+    "typeCredit" : "Cr\u00E9dit"
+  },
   "name" : "Nom",
   "save" : "Sauvegarder",
   "delete" : "Supprimer",
-  "close" : "Fermer"
+  "close" : "Fermer",
+  "add" : "Ajouter"
 }

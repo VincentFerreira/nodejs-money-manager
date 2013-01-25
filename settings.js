@@ -73,7 +73,7 @@ function bootApplication(app, config, passport) {
 
     // cookieParser should be above session
     app.use(express.cookieParser())
-
+    
     // bodyParser should be above methodOverride
     app.use(express.bodyParser())
     app.use(express.methodOverride())

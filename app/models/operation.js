@@ -19,7 +19,7 @@ var OperationSchema = new Schema({
   , type : {type: String, enum: ['credit', 'debit']}
   , repeat : {type: String, enum: ['once', 'daily', 'weekly', 'monthly']}
   , tags : {type: [], get: getTags, set: setTags}
-  , createdAt: {type : Date, default : Date.now}
+  , date: {type : Date, default : Date.now}
   , user: {}
 })
 

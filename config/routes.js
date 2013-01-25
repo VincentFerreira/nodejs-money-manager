@@ -55,7 +55,8 @@ module.exports = function (app, passport, auth) {
   
   var operations = require('../app/controllers/operations')
   app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
-  //app.post('/users/:accountUserId/account/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
+  app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list) 
+  app.post('/users/:userId/accounts/:accountId/operation', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
   //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
   //app.del('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
