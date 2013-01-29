@@ -90,7 +90,11 @@ block pageScript
         });  
     });
   
-    $('#dp3').datepicker();
+    /*
+    $('#dp3').datepicker({
+      format: 'dd-mm-yyyy'
+    });*/
+    $('#dp3').datepicker({format:'dd-mm-yyyy'}).datepicker('setValue', new Date());
     $('#MyGrid').datagrid({
       dataSource: new FlickrDataSource({
         

@@ -9,3 +9,62 @@ block content
         h2
           strong #{req.account.name}
           | : #{lingua.accountGraphs}
+          
+        #chart_div(style='width: 900px; height: 500px;')
+
+block pageScript
+  script(type='text/javascript', src='https://www.google.com/jsapi')
+  script(type='text/javascript')
+    google.load('visualization', '1', {'packages':['corechart']});
+    
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var jsonData = $.ajax({
+          url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operationList',
+          dataType:"json",
+          });
+          
+      jsonData.done(function(handleResponse) { 
+
+        // setup the new map and its variables
+        var operations = new google.visualization.DataTable();
+        operations.addColumn('date', 'Date');
+        operations.addColumn('number', 'Montant');
+ 
+        if(handleResponse.length!=0) {
+          var curDate = new Date(handleResponse[0].date);
+          var curAmount = handleResponse[0].amount;
+          // now we need to build the map data, loop over each result
+          $.each(handleResponse, function(i,v) {
+              if(i!=0){
+                if(curDate.toUTCString()==new Date(v.date).toUTCString()) {
+                  if(v.type=='debit') {
+                    curAmount -= v.amount;
+                  }else {
+                    curAmount += v.amount;
+                  }
+                }
+                else {
+                  operations.addRow([curDate, curAmount]);
+                  curDate = new Date(v.date);
+                  if(v.type=='debit') {
+                    curAmount -= v.amount;
+                  }else {
+                    curAmount += v.amount;
+                  }
+                }
+                if(handleResponse.length==(i-2)){
+                  operations.addRow([curDate, curAmount]);
+                }
+              }
+          });
+        }
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(operations, {width: 400, height: 240});
+      });
+
+    }
+    

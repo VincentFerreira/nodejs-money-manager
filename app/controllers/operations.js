@@ -13,9 +13,10 @@ exports.show = function (req, res) {
 
 // listinf of operations
 exports.list = function (req, res) {
+  console.log("req.account.id"+req.account.id);
   Operation
-    .find({ 'user._id' : new ObjectId(req.user.id) })
-    .sort({'createdAt': -1}) // sort by date
+    .find({ 'user._id' : new ObjectId(req.user.id), 'account' : new ObjectId(req.account.id)})
+    .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')
       res.jsonp(operations)
@@ -30,6 +31,9 @@ exports.create = function (req, res) {
   console.log("operation : "+operation)
   operation.account = req.account
   operation.user = req.user
+  operation.date = new Date(req.body.date);
+  console.log("unformated : "+req.body.date);
+  console.log(new Date(req.body.date));
   operation.save(function(err){
     if (err) {next(err)}
     else {
