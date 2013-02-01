@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
   , Operation = mongoose.model('Operation')
   , ObjectId = require('mongoose').Types.ObjectId
   , _ = require('underscore')
+  , moment = require('moment');
   
 // show operations
 exports.show = function (req, res) {
@@ -13,7 +14,7 @@ exports.show = function (req, res) {
 
 // listinf of operations
 exports.list = function (req, res) {
-  console.log("req.account.id"+req.account.id);
+  console.log("req.account.id"+req.account.id)
   Operation
     .find({ 'user._id' : new ObjectId(req.user.id), 'account' : new ObjectId(req.account.id)})
     .sort({'date': 1}) // sort by date
@@ -27,17 +28,39 @@ exports.list = function (req, res) {
 exports.create = function (req, res) {
   var operation = new Operation()
   console.log("operation, req.body : "+req.body)
+  console.log("requ.body.date = "+req.body.date)
+  var day = moment(req.body.date,"DD/MM/YYYY")
+  req.body.date = new Date()
+  req.body.date.setFullYear(day.year(),day.month(),day.date())
+  console.log("requ.body.date = "+req.body.date)
   operation = _.extend(operation, req.body)
-  console.log("operation : "+operation)
+  console.log("ope.date = "+operation.date)
   operation.account = req.account
   operation.user = req.user
-  operation.date = new Date(req.body.date);
-  console.log("unformated : "+req.body.date);
-  console.log(new Date(req.body.date));
+  
+  function adjustToUTC(d) {
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+    return d
+  }
+
   operation.save(function(err){
-    if (err) {next(err)}
+    if (err) {
+      console.log(err);
+      return res.render('500')}
     else {
       res.send({ 'res': 'ok' })
     }
+  })
+}
+
+// Delete an operation
+exports.destroy = function(req, res){
+  var operation = req.operation
+  console.log('DELETING : '+operation)
+  operation.remove(function(err){
+    // req.flash('notice', 'Deleted successfully')
+    if (err) return next(err)
+    req.session.success = 'Operation deleted!';
+    res.send({ 'res': 'ok' })
   })
 }  

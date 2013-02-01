@@ -27,5 +27,7 @@
   "save" : "Save changes",
   "delete" : "Delete",
   "close" : "Close",
-  "add" : "Add"
+  "add" : "Add",
+  "edit" : "Edit",
+  "action" : "Action"
 }

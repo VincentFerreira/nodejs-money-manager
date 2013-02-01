@@ -58,7 +58,7 @@ module.exports = function (app, passport, auth) {
   app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list) 
   app.post('/users/:userId/accounts/:accountId/operation', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
   //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
-  //app.del('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
+  app.del('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
   var graphs = require('../app/controllers/graphs')
   app.get('/users/:userId/accounts/:accountId/graphs', auth.requiresLogin, auth.account.hasAuthorization, graphs.show)   
@@ -75,7 +75,16 @@ module.exports = function (app, passport, auth) {
         req.account = account
         next()
       })
-    //todo ajouter les operations
+  })
+  
+  app.param('opId', function (req, res, next, id) {
+    Operation.findOne({ _id : id })
+      .exec(function (err, operation) {
+        if (err) return next(err)
+        if (!operation) return next(new Error('Failed to load Operation ' + id))
+        req.operation = operation
+        next()
+      })
   })
   
   //TODO app.param('accountId', function(req, res, next, id){ ...
