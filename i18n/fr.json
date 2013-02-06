@@ -23,6 +23,9 @@
     "typeDebit" : "D\u00E9bit",
     "typeCredit" : "Cr\u00E9dit"
   },
+  "graph" : {
+    "amountTimeLine" : "Montant du compte"
+  },
   "name" : "Nom",
   "save" : "Sauvegarder",
   "delete" : "Supprimer",

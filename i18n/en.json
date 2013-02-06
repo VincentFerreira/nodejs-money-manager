@@ -23,6 +23,9 @@
     "typeDebit" : "Debit",
     "typeCredit" : "Credit"
   },
+  "graph" : {
+    "amountTimeLine" : "Account amount"
+  },
   "name" : "Name",
   "save" : "Save changes",
   "delete" : "Delete",

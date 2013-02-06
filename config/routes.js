@@ -9,7 +9,9 @@ var mongoose = require('mongoose')
 
 module.exports = function (app, passport, auth) {
 
-  // user routes
+  /*
+   * USER ROUTES
+   */ 
   var users = require('../app/controllers/users')
   app.get('/login', users.login)
   app.get('/signup', users.signup)
@@ -45,14 +47,18 @@ module.exports = function (app, passport, auth) {
       })
   })
 
-  // account routes
+  /*
+   * ACCOUNT ROUTES
+   */ 
   var accounts = require('../app/controllers/accounts')
   app.get('/users/:userId/accounts', auth.requiresLogin, auth.user.hasAuthorization, accounts.resume) // accounts resume
   app.post('/users/:userId/account/', auth.requiresLogin, auth.user.hasAuthorization, accounts.create) // add account
   app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update) //update account settings
   app.del('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.destroy) //delete account
   
-  
+  /*
+   * OPERATION ROUTES
+   */ 
   var operations = require('../app/controllers/operations')
   app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
   app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list) 
@@ -60,11 +66,27 @@ module.exports = function (app, passport, auth) {
   //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
   app.del('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
+  /*
+   * GRAPH ROUTES
+   */ 
   var graphs = require('../app/controllers/graphs')
   app.get('/users/:userId/accounts/:accountId/graphs', auth.requiresLogin, auth.account.hasAuthorization, graphs.show)   
-    
+  
+  /*
+   * CALENDAR ROUTES
+   */ 
+  var calendar = require('../app/controllers/calendar')
+  //TODO add new userid to get all the operations of the user
+  app.get('/users/:userId/calendar', auth.requiresLogin, auth.user.hasAuthorization, calendar.show)   
+  
+  
+  /*
+   * SETTINGS ROUTES
+   */ 
   var settings = require('../app/controllers/settings')
   app.get('/users/:userId/accounts/:accountId/settings', auth.requiresLogin, auth.account.hasAuthorization, settings.show)   
+  
+  
   
   
   app.param('accountId', function (req, res, next, id) {
@@ -86,8 +108,13 @@ module.exports = function (app, passport, auth) {
         next()
       })
   })
+
+
+/*
+ * SAMPLE ROUTES (to keep in view)
+ *
+ */
   
-  //TODO app.param('accountId', function(req, res, next, id){ ...
   
   // article routes
   var articles = require('../app/controllers/articles')

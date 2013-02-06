@@ -34,9 +34,9 @@ block pageScript
         operations.addColumn('number', 'Montant');
  
         if(handleResponse.length!=0) {
+          //display first amount point
           var curDate = new Date(handleResponse[0].date);
           var curAmount = handleResponse[0].amount;
-          // now we need to build the map data, loop over each result
           $.each(handleResponse, function(i,v) {
               if(i!=0){
                 if(curDate.toUTCString()==new Date(v.date).toUTCString()) {
@@ -47,6 +47,7 @@ block pageScript
                   }
                 }
                 else {
+                  //add new amount point
                   operations.addRow([curDate, curAmount]);
                   curDate = new Date(v.date);
                   if(v.type=='debit') {
@@ -55,7 +56,8 @@ block pageScript
                     curAmount += v.amount;
                   }
                 }
-                if(handleResponse.length==(i-2)){
+                //add last amount point
+                if(handleResponse.length==(i+1)){
                   operations.addRow([curDate, curAmount]);
                 }
               }
@@ -63,7 +65,7 @@ block pageScript
         }
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(operations, {width: 400, height: 240});
+        chart.draw(operations, {'title':!{JSON.stringify(lingua.graph.amountTimeLine)}, width: 700, height: 340});
       });
 
     }
