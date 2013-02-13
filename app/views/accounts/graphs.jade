@@ -36,7 +36,12 @@ block pageScript
         if(handleResponse.length!=0) {
           //display first amount point
           var curDate = new Date(handleResponse[0].date);
-          var curAmount = handleResponse[0].amount;
+          var curAmount
+          if(handleResponse[0].type=='debit'){
+            curAmount = - handleResponse[0].amount
+          }else{
+            curAmount = handleResponse[0].amount;
+          }            
           $.each(handleResponse, function(i,v) {
               if(i!=0){
                 if(curDate.toUTCString()==new Date(v.date).toUTCString()) {

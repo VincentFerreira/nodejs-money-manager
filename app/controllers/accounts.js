@@ -1,5 +1,9 @@
+// TODO correction des erreurs crashantes + suivi des erreurs : voir si il n'y a pas d'amelioration a faire ici :
+//au niveau de resume : if (err) return next(err) et if (!accounts) return next(new Error('Failed to load Accounts for user ' + id))
+//verifier que ce n'est pas cela qui fait fort crasher
 var mongoose = require('mongoose')
   , Account = mongoose.model('Account')
+  , Operation = mongoose.model('Operation')
   , ObjectId = require('mongoose').Types.ObjectId
   , _ = require('underscore')
   
@@ -16,13 +20,20 @@ exports.resume = function (req, res) {
         })
       })
 }
+
+// listing of accounts from user
+exports.list = function (req, res) {
+  Account.find({ 'user._id' : new ObjectId(req.user.id) })
+    .exec(function(err, accounts) {
+      if (err) return res.render('500')
+      res.jsonp(accounts)
+    })
+}
   
 // Create an account
 exports.create = function (req, res) {
-  console.log(req.body)
   var account = new Account(req.body)
   account.user = req.user
-
   account.save(function(err){
     if (err) return next(err)
     res.redirect('/users/'+req.user.id+'/accounts/'+account.id+'/operations')
@@ -49,10 +60,10 @@ exports.update = function(req, res){
   })
 }
   
-// Delete an account
+// Delete an account and, if the user is the only owner, all operations attached
 exports.destroy = function(req, res){
   var account = req.account
-  console.log('DELETING : '+account)
+  Operation.remove( { 'account' : new ObjectId(account.id)} , function(err,res) { console.log(res) })
   account.remove(function(err){
     // req.flash('notice', 'Deleted successfully')
     if (err) return next(err)
@@ -64,7 +75,6 @@ exports.destroy = function(req, res){
 // show account
 exports.show = function (req, res) {
   var account = req.account
-  console.log(account)
   res.render('accounts/show', {
       title: account.name
     , account: account

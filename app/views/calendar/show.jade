@@ -27,7 +27,20 @@ block pageScript
           right: 'month,agendaWeek,agendaDay'
         },
         editable: true,
-        events: [
+        //events: '/users/'+!{JSON.stringify(req.user.id)}+'/events'
+        eventSources: [
+
+        // your event source
+        {
+            url: '/users/'+!{JSON.stringify(req.user.id)}+'/events', // use the `url` property
+            color: 'rgb(51,102,204)',    // an option!
+            textColor: 'white'  // an option!
+        }
+
+        // any other sources...
+
+        ]
+        /*[
           {
             title: 'All Day Event',
             start: new Date(y, m, 1)
@@ -72,7 +85,8 @@ block pageScript
             end: new Date(y, m, 29),
             url: 'http://google.com/'
           }
-        ]
-      });
+        ]*/
+      });  
+      //TODO ajax call for rendering events
       
     });

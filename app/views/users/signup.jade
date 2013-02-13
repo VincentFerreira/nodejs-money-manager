@@ -2,34 +2,30 @@ extends auth
 
 block auth
   form.signup.form-horizontal(action="/users", method="post")
-    .control-group
-      label.control-label(for='name') Full name
-      .controls
-        input#name(type='text', name="name", placeholder='Full name')
 
     .control-group
-      label.control-label(for='email') Email
+      label.control-label(for='email') #{lingua.signup_form.email}
       .controls
-        input#email(type='text', name="email", placeholder='Email')
+        input#email(type='text', name="email", placeholder='#{lingua.signup_form.email}')
 
     .control-group
-      label.control-label(for='username') Username
+      label.control-label(for='username') #{lingua.signup_form.username}
       .controls
-        input#username(type='text', name="username", placeholder='Username')
+        input#username(type='text', name="username", placeholder='#{lingua.signup_form.username}')
 
     .control-group
-      label.control-label(for='password') Password
+      label.control-label(for='password') #{lingua.signup_form.password}
       .controls
-        input#password(type='password', name="password", placeholder='Password')
+        input#password(type='password', name="password", placeholder='#{lingua.signup_form.password}')
 
     .control-group
-      label.control-label(for='locale') Language
+      label.control-label(for='locale') #{lingua.signup_form.language}
       .controls
         select(name="locale", placeholder='Locale')
           option(value="en") EN
           option(value="fr") FR
     .form-actions
-      button.btn.btn-primary(type='submit') Sign up
+      button.btn.btn-primary(type='submit') #{lingua.signup}
       &nbsp;
-      | or&nbsp;
-      a.show-login(href="/login") login
+      | #{lingua.or}&nbsp;
+      a.show-login(href="/login") #{lingua.login}

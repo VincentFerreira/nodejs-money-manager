@@ -1,19 +1,17 @@
+﻿
 extends ../layouts/default
 
 block main
   h1= title
 
 block content
-  .row
-    .offset1.span5
-      a(href="/auth/facebook")
-        img(src="/img/facebook.png")
-      a(href="/auth/github")
-        img(src="/img/github.png")
-      a(href="/auth/twitter")
-        img(src="/img/twitter.png")
-      a(href="/auth/google")
-        img(src="/img/google.png")
+  .row.well.span7
+    .span6
+      .row-fluid
+        .span3
+          img(src="/img/cash_lock.png")
+        .span9
+          h2 Prêt à compter les pepettes ?
     .span6
       if (typeof errors !== 'undefined')
         .fade.in.alert.alert-block.alert-error

@@ -34,12 +34,17 @@ div(class='modal fade', id='add-compte')
     div.modal-header
       button.close(data-dismiss='modal')×
       h3 #{lingua.addAccount}
-
+    
     div.modal-body
-      textarea#accountName(name='name')
+      .form-horizontal
+        .control-group
+          label.control-label(for='name') Nom
+          .controls
+            input#accountName(type='text', name='name', placeholder='Nom')
 
     div.modal-footer
       button(class='btn btn-error', data-dismiss='modal') Close
       button(type='submit', class='btn btn-success')
         i(class='icon-pencil icon-white')
         | Save
+

@@ -3,6 +3,14 @@
   "calendar": "Calendar",
   "accounts": "Accounts",
   "profile": "Profile",
+  "signup" : "Signup",
+  "or" : "or",
+  "signup_form" : {
+    "email" : "EMail",
+    "username" : "Username",
+    "password" : "Password",
+    "language" : "Language"
+  },
   "login": "Login",
   "logout": "Logout",
   "accountList":"Account List",
@@ -13,6 +21,10 @@
   "deleteAccount" : {
     "title" : "Delete account",
     "description" : "Are you sure you want to delete account {name} ?"
+  },
+  "deleteOperation" : {
+    "title" : "Delete operation",
+    "description" : "Are you sure to delete operation "
   },
   "operation" : {
     "name" : "Name",

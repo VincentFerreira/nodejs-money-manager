@@ -75,13 +75,13 @@ block content
             input(type="hidden", name="_method", value="DELETE")
             div.modal-header
               button.close(data-dismiss='modal')×
-              h3 #{lingua.deleteAccount.title}
+              h3 #{lingua.deleteOperation.title}
 
             div.modal-body
-              p #{lingua.deleteAccount.description(req.account.name)}
+              p#delete-confirm 
 
             div.modal-footer
-              input(id="testest", type="text")
+              input(id="testest", type="hidden")
               button(class='btn btn-error', data-dismiss='modal') #{lingua.close}
               button(type="button", id="delOperation", class='btn btn-danger') #{lingua.delete}
 
@@ -173,7 +173,7 @@ block pageScript
               item.date = moment(item.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('LL');
               //action buttons adding
               var id = item._id;
-              var actions = '<div class="btn-group"><button type="button" class="btn" id="removeope_'+id+'" ope-id="'+id+'"><i class="icon-trash"></i></button><button type="button" class="btn" id="editope_'+id+'" ope-id="'+id+'"><i class="icon-pencil"></i></button></div>';
+              var actions = '<div class="btn-group"><button type="button" class="btn" id="removeope_'+id+'" ope-name="'+item.name+'" ope-id="'+id+'"><i class="icon-trash"></i></button><button type="button" class="btn" id="editope_'+id+'" ope-id="'+id+'"><i class="icon-pencil"></i></button></div>';
               item._id = actions;
             });
           }
@@ -185,6 +185,7 @@ block pageScript
           //console.log($(this).attr("ope-id"));
           //toolbar = '<div class="btn-group btn-group-vertical"><button type="button" class="btn"><i class="icon-align-left"></i></button><button type="button" class="btn"><i class="icon-align-center"></i></button></div>';
           $("#testest").val($(this).attr("ope-id")); 
+          $("#delete-confirm").text(!{JSON.stringify(lingua.deleteOperation.description)}+$(this).attr("ope-name")+" ?"); 
           $('#delete-ope').modal('show');
         });
        

@@ -3,17 +3,17 @@ extends auth
 block auth
   form.login.form-horizontal(action="/users/session", method="post")
     .control-group
-      label.control-label(for='email') Email
+      label.control-label(for='email') #{lingua.signup_form.email}
       .controls
-        input#email(type='text', name="email", placeholder='Email')
+        input#email(type='text', name="email", placeholder='#{lingua.signup_form.email}')
 
     .control-group
-      label.control-label(for='password') Password
+      label.control-label(for='password') #{lingua.signup_form.password}
       .controls
-        input#password(type='password', name="password", placeholder='Password')
+        input#password(type='password', name="password", placeholder='#{lingua.signup_form.password}')
 
     .form-actions
-      button.btn.btn-primary(type='submit') Login
+      button.btn.btn-primary(type='submit') #{lingua.login}
       &nbsp;
-      | or&nbsp;
-      a.show-signup(href="/signup") sign up
+      | #{lingua.or}&nbsp;
+      a.show-signup(href="/signup") #{lingua.signup}

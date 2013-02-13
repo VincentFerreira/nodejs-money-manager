@@ -37,7 +37,7 @@ module.exports = function (app, passport, auth) {
         req.profile = user
         
         Account
-            .find({ 'user._id' : new ObjectId(req.user.id) })
+            .find({ 'user._id' : new ObjectId(user.id) })
             .exec(function (err, accounts) {
                 if (err) return next(err)
                 if (!accounts) return next(new Error('Failed to load Accounts for user ' + id))
@@ -52,6 +52,7 @@ module.exports = function (app, passport, auth) {
    */ 
   var accounts = require('../app/controllers/accounts')
   app.get('/users/:userId/accounts', auth.requiresLogin, auth.user.hasAuthorization, accounts.resume) // accounts resume
+  app.get('/users/:userId/accounts/all', auth.requiresLogin, auth.user.hasAuthorization, accounts.list) // accounts list
   app.post('/users/:userId/account/', auth.requiresLogin, auth.user.hasAuthorization, accounts.create) // add account
   app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update) //update account settings
   app.del('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.destroy) //delete account
@@ -61,7 +62,10 @@ module.exports = function (app, passport, auth) {
    */ 
   var operations = require('../app/controllers/operations')
   app.get('/users/:userId/accounts/:accountId/operations', auth.requiresLogin, auth.account.hasAuthorization, operations.show) 
-  app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list) 
+  //get all the operations from account of id :accountId
+  app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list)
+  //get all the operations from all accounts of the user
+  app.get('/users/:userId/accounts/all/operationsList', auth.requiresLogin, auth.user.hasAuthorization, operations.listall)
   app.post('/users/:userId/accounts/:accountId/operation', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
   //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
   app.del('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
@@ -76,9 +80,8 @@ module.exports = function (app, passport, auth) {
    * CALENDAR ROUTES
    */ 
   var calendar = require('../app/controllers/calendar')
-  //TODO add new userid to get all the operations of the user
-  app.get('/users/:userId/calendar', auth.requiresLogin, auth.user.hasAuthorization, calendar.show)   
-  
+  app.get('/users/:userId/calendar', auth.requiresLogin, auth.user.hasAuthorization, calendar.show) //render calendar view
+  app.get('/users/:userId/events', auth.requiresLogin, auth.user.hasAuthorization, calendar.index) //list operations user as calendar events
   
   /*
    * SETTINGS ROUTES

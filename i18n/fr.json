@@ -3,6 +3,14 @@
   "calendar": "Calendrier",
   "accounts": "Comptes",
   "profile": "Profil",
+  "signup" : "S'inscrire",
+  "or" : "ou",
+  "signup_form" : {
+    "email" : "Adresse Mail",
+    "username" : "Pseudo",
+    "password" : "Mot de passe",
+    "language" : "Langue"
+  },
   "login": "Se connecter",
   "logout": "Se d\u00E9connecter",
   "accountList": "Liste de comptes",
@@ -13,6 +21,10 @@
   "deleteAccount" : {
     "title" : "Supprimer le compte",
     "description" : "Etes vous sure de vouloir supprimer le compte {name} ?"
+  },
+  "deleteOperation" : {
+    "title" : "Supprimer l'op\u00E9ration",
+    "description" : "Etes vous sure de vouloir supprimer l'op\u00E9ration "
   },
   "operation" : {
     "name" : "Nom",

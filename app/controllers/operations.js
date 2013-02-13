@@ -12,11 +12,22 @@ exports.show = function (req, res) {
   })
 }
 
-// listinf of operations
+// listing of operations from account req.account.id
 exports.list = function (req, res) {
   console.log("req.account.id"+req.account.id)
   Operation
     .find({ 'user._id' : new ObjectId(req.user.id), 'account' : new ObjectId(req.account.id)})
+    .sort({'date': 1}) // sort by date
+    .exec(function(err, operations) {
+      if (err) return res.render('500')
+      res.jsonp(operations)
+    })
+}
+
+// listing of operations from all accounts of the user
+exports.listall = function (req, res) {
+  Operation
+    .find({ 'user._id' : new ObjectId(req.user.id) })
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')

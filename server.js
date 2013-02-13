@@ -11,11 +11,37 @@ require('express-namespace')
 var env = process.env.NODE_ENV || 'development'
   , config = require('./config/config')[env]
   , auth = require('./authorization')
+  , mongourl
 
+//mongodb appfog connection
+var generate_mongo_url = function(obj){
+	obj.hostname = (obj.hostname || 'localhost')
+	obj.port = (obj.port || 27017)
+	obj.db = (obj.db || 'test')
+	if(obj.username && obj.password){
+		return "mongodb://" + obj.username + ":" + obj.password + "@" + obj.hostname + ":" + obj.port + "/" + obj.db
+	}
+	else{
+		return "mongodb://" + obj.hostname + ":" + obj.port + "/" + obj.db
+	}
+}
+
+if(process.env.VCAP_SERVICES){
+	var env = JSON.parse(process.env.VCAP_SERVICES)
+	console.log(env)
+	var mongo = env['mongodb-1.8'][0]['credentials']
+	mongourl = generate_mongo_url(mongo)
+}
+else{
+	mongourl = config.db
+}
+
+
+  
 // Bootstrap db connection
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
-mongoose.connect(config.db)
+mongoose.connect(mongourl)
 
 // Bootstrap models
 var models_path = __dirname + '/app/models'

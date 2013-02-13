@@ -7,12 +7,12 @@ html(lang='en', class="fuelux", xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='
       .main-content
         - if(messageSuccess)
           div(class="alert alert-success")
-            button.close( data-dismiss="alert")×
+            button.close( data-dismiss="alert")x
             strong #{messageSuccess}
           
         - if(messageError)
           div(class="alert alert-error")
-            button.close(data-dismiss="alert")×
+            button.close(data-dismiss="alert")x
             strong #{messageError }
         
         block content
