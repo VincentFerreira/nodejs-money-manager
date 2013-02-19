@@ -1,6 +1,11 @@
 ﻿
 div.well.sidebar-nav
  ul.nav.nav-list
+   - var resumeclass = ((title==='resume') ? 'active' : '')
+   li(class=resumeclass)
+    a(href='/users/'+req.user.id+'/accounts')
+      i.icon-eye-open
+      | #{lingua.accountResume}
    li.nav-header #{lingua.accountList}
    each account, i in accounts
      - var klass = (account.id === req.param('accountId') ? 'active' : '')
@@ -23,6 +28,7 @@ div.well.sidebar-nav
            a(href='/users/'+req.user.id+'/accounts/'+account.id+'/settings')
              i.icon-wrench
              | #{lingua.accountSettings}
+      li.divider
    li
      a.btn(href='#add-compte', data-toggle='modal')
        i.icon-plus

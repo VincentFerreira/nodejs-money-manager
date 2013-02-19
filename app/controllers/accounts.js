@@ -15,7 +15,8 @@ exports.resume = function (req, res) {
         if (err) return next(err)
         if (!accounts) return next(new Error('Failed to load Accounts for user ' + id))
         res.render('accounts/resume', {
-            title: 'resume'
+            page:'resume'
+          , title: 'resume'
           , accounts: accounts
         })
       })

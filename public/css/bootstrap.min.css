@@ -630,7 +630,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .tabs-right>.nav-tabs .active>a,.tabs-right>.nav-tabs .active>a:hover{border-color:#ddd #ddd #ddd transparent;*border-left-color:#ffffff;}
 .nav>.disabled>a{color:#dfdfdf;}
 .nav>.disabled>a:hover{text-decoration:none;background-color:transparent;cursor:default;}
-.navbar{overflow:visible;margin-bottom:20px;color:#ffffff;*position:relative;*z-index:2;}
+.navbar{overflow:visible;margin-bottom:0px;color:#ffffff;*position:relative;*z-index:2;}
 .navbar-inner{min-height:50px;padding-left:20px;padding-right:20px;background-color:#080808;background-image:-moz-linear-gradient(top, #080808, #080808);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#080808), to(#080808));background-image:-webkit-linear-gradient(top, #080808, #080808);background-image:-o-linear-gradient(top, #080808, #080808);background-image:linear-gradient(to bottom, #080808, #080808);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff080808', endColorstr='#ff080808', GradientType=0);border:1px solid transparent;-webkit-border-radius:0px;-moz-border-radius:0px;border-radius:0px;-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);*zoom:1;}.navbar-inner:before,.navbar-inner:after{display:table;content:"";line-height:0;}
 .navbar-inner:after{clear:both;}
 .navbar .container{width:auto;}
