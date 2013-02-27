@@ -64,6 +64,11 @@ exports.create = function (req, res) {
   })
 }
 
+// get an operation by id and return it as json
+exports.get = function(req, res){
+  res.jsonp(req.operation)
+} 
+
 // Delete an operation
 exports.destroy = function(req, res){
   var operation = req.operation
@@ -75,3 +80,31 @@ exports.destroy = function(req, res){
     res.send({ 'res': 'ok' })
   })
 }  
+
+// Update operation
+exports.update = function(req, res){
+  console.log("operation, req.body : "+req.body)
+  console.log("requ.body.date = "+req.body.date)
+  var day = moment(req.body.date,"DD/MM/YYYY")
+  req.body.date = new Date()
+  req.body.date.setFullYear(day.year(),day.month(),day.date())
+  console.log("requ.body.date = "+req.body.date)
+  var operation = _.extend(req.operation, req.body)
+  console.log("ope.date = "+operation.date)
+  operation.account = req.account
+  operation.user = req.user
+  
+  function adjustToUTC(d) {
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+    return d
+  }
+
+  operation.save(function(err){
+    if (err) {
+      console.log(err);
+      return res.render('500')}
+    else {
+      res.send({ 'res': 'ok' })
+    }
+  })
+}

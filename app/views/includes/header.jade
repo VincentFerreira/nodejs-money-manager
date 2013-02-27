@@ -5,9 +5,19 @@
        span.icon-bar
        span.icon-bar
        span.icon-bar
-      a.brand(href='/') G.A.E.L
+        a.brand(href='/') G.A.E.L
       .nav-collapse.collapse
         ul.nav
+          li.dropdown
+            a(href='#', data-toggle='dropdown', class='dropdown-toggle')
+              i(class='icon-info-sign icon-white')
+              | A Propos
+              b.caret
+            ul.dropdown-menu(role="menu", arial-labelledby="dLabel")
+              li
+                a(href="/tour") #{lingua.tour}
+              li
+                a(href="/news") #{lingua.news}
           if (req.isAuthenticated())
             li
               a(href="/users/"+req.user.id+"/accounts", title="account listing")

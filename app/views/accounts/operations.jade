@@ -14,15 +14,15 @@ block content
           strong #{req.account.name}
           | : #{lingua.accountOperations}
         form(class="well form-inline", id="operation")
-          label(for="name") #{lingua.operation.name}
+          label(for="name") #{lingua.operation.name} : 
           input(type="text",id="name", name="name", class="input-small") 
-          label(for="amount") #{lingua.operation.amount}
+          label(for="amount") #{lingua.operation.amount} : 
           input(type="text",id="amount", name="amount", class="input-small") 
-          label(for="type") #{lingua.operation.type}
-          select(id="type", name="type")
+          label(for="type") #{lingua.operation.type} : 
+          select(id="type", name="type", style='width:100px')
             option(value="debit") #{lingua.operation.typeDebit}
             option(value="credit") #{lingua.operation.typeCredit}
-          label(for="date") #{lingua.operation.date}
+          label(for="date") #{lingua.operation.date} : 
           div(class="input-append date", id="dp3", data-date="12/02/2012", data-date-format="dd/mm/yyyy")
             input(class="input-small", id="date", name="date", size="16", type="text", value="12/02/2012")
             span(class="add-on")
@@ -70,6 +70,40 @@ block content
                       button(class="btn grid-nextpage")
                         i.icon-chevron-right
         
+        div(class='modal fade', id='edit-ope')
+          form(class="form-horizontal", id="edit-operation-form")
+            input(type="hidden", name="_method", value="PUT")
+            div.modal-header
+              button.close(data-dismiss='modal')×
+              h3 #{lingua.editOperation.title}
+
+            div.modal-body
+              .control-group
+                label(class='control-label',for='name') #{lingua.operation.name}
+                .controls
+                  input(type='text',id='edit-name', name='name', size='40', class='input') 
+              .control-group
+                label(class='control-label',for="amount") #{lingua.operation.amount}
+                .controls
+                  input(type="text",id="edit-amount", name="amount", class="input") 
+              .control-group
+                label(class='control-label',for="type") #{lingua.operation.type}
+                .controls
+                  select(id="edit-type", name="type", style='width:100px')
+                    option(value="debit") #{lingua.operation.typeDebit}
+                    option(value="credit") #{lingua.operation.typeCredit}
+              .control-group
+                label(class='control-label',for="date") #{lingua.operation.date}
+                .controls
+                  div(class="input-append date", id="dp4", data-date="12/02/2012", data-date-format="dd/mm/yyyy")
+                    input(class="input-small", id="edit-date", name="date", size="16", type="text", value="12/02/2012")
+                    span(class="add-on")
+                      i(class="icon-th")
+            div.modal-footer
+              input(id="ope-to-edit", type="hidden")
+              button(class='btn btn-error', data-dismiss='modal') #{lingua.close}
+              button(type="button", id="editOperation", class='btn btn-danger') #{lingua.edit}
+        
         div(class='modal fade', id='delete-ope')
           form
             input(type="hidden", name="_method", value="DELETE")
@@ -81,7 +115,7 @@ block content
               p#delete-confirm 
 
             div.modal-footer
-              input(id="testest", type="hidden")
+              input(id="ope-to-delete", type="hidden")
               button(class='btn btn-error', data-dismiss='modal') #{lingua.close}
               button(type="button", id="delOperation", class='btn btn-danger') #{lingua.delete}
 
@@ -115,14 +149,11 @@ block pageScript
       
       //ajax sending for adding an operation
       $('#delOperation').click(function() {
-          var jsonOp = JSON.stringify($("#operation").serializeObject());
-          console.log(jsonOp);
           //console.log($('#operation').serialize());
           $.ajax({
-              url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operation/'+$('#testest').val(),
+              url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operation/'+$('#ope-to-delete').val(),
               type: "DELETE",
               contentType: "application/json",
-              data: jsonOp,
               success: function (result) {
                 $('#MyGrid').datagrid('reload');
                 $('#delete-ope').modal('hide');
@@ -134,7 +165,31 @@ block pageScript
           });  
       });
     
+      //ajax sending for updating an operation
+      $('#editOperation').click(function() {
+          var jsonOp = JSON.stringify($("#edit-operation-form").serializeObject());
+          console.log(jsonOp);
+          //console.log($('#operation').serialize());
+          $.ajax({
+              url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operation/'+$('#ope-to-edit').val(),
+              type: "PUT",
+              contentType: "application/json",
+              data: jsonOp,
+              success: function (result) {
+                $('#MyGrid').datagrid('reload');
+                $('#edit-ope').modal('hide');
+              },
+              error: function (result, e) {
+                console.log(result);
+                alert(result + " : "+ e);
+              }
+          }); 
+      });
+    
+    
+    
       $('#dp3').datepicker({format:'dd/mm/yyyy'}).datepicker('setValue', new Date());
+      $('#dp4').datepicker({format:'dd/mm/yyyy'}).datepicker('setValue', new Date());
       $('#MyGrid').datagrid({
         dataSource: new FlickrDataSource({
           
@@ -179,14 +234,33 @@ block pageScript
           }
         })
       }).on('loaded', function () {
-        //var toolbar;
         $("button[id^='removeope_']").on('click', function(e){
           e.preventDefault();
-          //console.log($(this).attr("ope-id"));
-          //toolbar = '<div class="btn-group btn-group-vertical"><button type="button" class="btn"><i class="icon-align-left"></i></button><button type="button" class="btn"><i class="icon-align-center"></i></button></div>';
-          $("#testest").val($(this).attr("ope-id")); 
+          $("#ope-to-delete").val($(this).attr("ope-id")); 
           $("#delete-confirm").text(!{JSON.stringify(lingua.deleteOperation.description)}+$(this).attr("ope-name")+" ?"); 
           $('#delete-ope').modal('show');
+        });
+        
+        $("button[id^='editope_']").on('click', function(e){
+          e.preventDefault();
+          var opeIdToEdit = $(this).attr("ope-id");
+          $("#ope-to-edit").val(opeIdToEdit);
+          $.ajax({
+              url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operation/'+opeIdToEdit,
+              type: "GET",
+              contentType: "application/json",
+              success: function (result) {
+                $('#edit-name').val(result.name);
+                $('#edit-amount').val(result.amount);
+                $('#edit-type').val(result.type);
+                $('#edit-date').val( moment(result.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('DD/MM/YYYY'));
+              },
+              error: function (result, e) {
+                console.log(result);
+                alert(result + " : "+ e);
+              }
+          });  
+          $('#edit-ope').modal('show');
         });
        
       });    

@@ -3,6 +3,8 @@
   "calendar": "Calendar",
   "accounts": "Accounts",
   "profile": "Profile",
+  "tour":"Tour",
+  "news":"News",
   "signup" : "Signup",
   "or" : "or",
   "signup_form" : {
@@ -26,6 +28,9 @@
   "deleteOperation" : {
     "title" : "Delete operation",
     "description" : "Are you sure to delete operation "
+  },
+  "editOperation" : {
+    "title" : "Edit operation"
   },
   "operation" : {
     "name" : "Name",

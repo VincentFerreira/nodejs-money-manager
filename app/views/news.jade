@@ -1,0 +1,15 @@
+﻿extends /layouts/default
+
+block content
+  .row
+    .span12
+      .page-header
+        h2 #{lingua.news}
+  .row
+    .span12
+      h3 Dernieres mises à jour
+      table(class='table table-striped', id='github-table')
+        tr
+          th Date
+          th Objet
+      

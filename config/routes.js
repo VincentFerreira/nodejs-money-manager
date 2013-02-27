@@ -66,8 +66,9 @@ module.exports = function (app, passport, auth) {
   app.get('/users/:userId/accounts/:accountId/operationList', auth.requiresLogin, auth.account.hasAuthorization, operations.list)
   //get all the operations from all accounts of the user
   app.get('/users/:userId/accounts/all/operationsList', auth.requiresLogin, auth.user.hasAuthorization, operations.listall)
+  app.get('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.user.hasAuthorization, operations.get)
   app.post('/users/:userId/accounts/:accountId/operation', auth.requiresLogin, auth.account.hasAuthorization, operations.create) 
-  //app.put('/users/:accountUserId/account/operations/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
+  app.put('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.update)
   app.del('/users/:userId/accounts/:accountId/operation/:opId', auth.requiresLogin, auth.account.hasAuthorization, operations.destroy)
   
   /*
@@ -160,10 +161,17 @@ module.exports = function (app, passport, auth) {
       })
   })
 
+  // NEWS ROUTE
+  app.get('/news', function(req,res){
+    res.render('news', {
+      title: 'G.A.E.L News'
+    })
+  })
+  
   // home route
   app.get('/', function(req,res){
 	res.render('index', {
-		title: 'Sign up'
+		title: 'G.A.E.L'
 	})
   })
 
