@@ -9,7 +9,31 @@ block content
     .span12
       h3 Dernieres mises à jour
       table(class='table table-striped', id='github-table')
-        tr
-          th Date
-          th Objet
+        tbody
+          tr
+            th Date
+            th Objet
       
+      
+block pageScript
+  script(src="/js/moment.min.js", type="text/javascript")  
+  script(src="/js/lang/fr.js", type="text/javascript")
+  script(type="text/javascript")
+    $(document).ready(function() {
+      moment.lang('fr');
+      $.ajax({
+          url: 'https://api.github.com/repos/VincentFerreira/nodejs-money-manager/commits?page=1&per_page=5',
+          type: "GET",
+          success: function (results) {
+            //github-table
+            var jsonRes = jQuery.parseJSON(results);
+            for (res in jsonRes) {
+              $('#github-table > tbody:last').append('<tr><td>'+moment(jsonRes[res].commit.author.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('LL')+'</td><td>'+jsonRes[res].commit.message+'</td></tr>');
+            };
+          },
+          error: function (result, e) {
+            console.log(result);
+            alert(result + " : "+ e);
+          }
+      });
+    });

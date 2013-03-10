@@ -102,7 +102,7 @@ block content
             div.modal-footer
               input(id="ope-to-edit", type="hidden")
               button(class='btn btn-error', data-dismiss='modal') #{lingua.close}
-              button(type="button", id="editOperation", class='btn btn-danger') #{lingua.edit}
+              button(type="button", id="editOperation", class='btn btn-primary') #{lingua.edit}
         
         div(class='modal fade', id='delete-ope')
           form
@@ -185,15 +185,13 @@ block pageScript
               }
           }); 
       });
-    
-    
-    
+        
       $('#dp3').datepicker({format:'dd/mm/yyyy'}).datepicker('setValue', new Date());
       $('#dp4').datepicker({format:'dd/mm/yyyy'}).datepicker('setValue', new Date());
       $('#MyGrid').datagrid({
         dataSource: new FlickrDataSource({
           
-          url : '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operationList',
+          url : '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+!{JSON.stringify(req.account.id)}+'/operationList?initbalance=true',
           
           // Column definitions for Datagrid
           columns: [{
@@ -213,6 +211,10 @@ block pageScript
             label: !{JSON.stringify(lingua.operation.date)},
             sortable: true
           },{
+            property: 'balance',
+            label: !{JSON.stringify(lingua.operation.balance)},
+            sortable: true
+          },{
             property: '_id',
             label: !{JSON.stringify(lingua.action)},
             sortable: true
@@ -222,8 +224,18 @@ block pageScript
           formatter: function (items) {
             moment.lang('fr');
             $.each(items, function (index, item) {
+              //add balance colors
+              if(item.balance>0){
+                item.balance='<span style="color:green">'+item.balance+"</span>";
+              }else{
+                item.balance='<span style="color:red">'+item.balance+"</span>";
+              }               
               //add operations colors
-              
+              if(item.type=="credit"){
+                item.amount='<span style="color:green">'+item.amount+"</span>";
+              }else{
+                item.amount='<span style="color:red">-'+item.amount+"</span>";
+              }         
               //date formating
               item.date = moment(item.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('LL');
               //action buttons adding

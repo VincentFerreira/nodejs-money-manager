@@ -20,6 +20,14 @@ exports.list = function (req, res) {
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')
+      var balance = 0
+      for(i=0;i<operations.length;i++){
+        balance = balance + (operations[i].type=="credit"? operations[i].amount:-operations[i].amount)
+        console.log(balance)
+        console.log(operations[i])
+        operations[i].balance = balance
+        console.log('bal : '+operations[i].balance)
+      }
       res.jsonp(operations)
     })
 }
@@ -31,6 +39,14 @@ exports.listall = function (req, res) {
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')
+      var balance = 0
+      for(i=0;i<operations.length;i++){
+        balance = balance + (operations[i].type=="credit"? operations[i].amount:-operations[i].amount)
+        console.log(balance)
+        console.log(operations[i])
+        operations[i].balance = balance
+        console.log('bal : '+operations[i].balance)
+      }
       res.jsonp(operations)
     })
 }

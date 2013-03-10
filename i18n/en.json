@@ -38,6 +38,7 @@
     "type" : "Type",
     "repeat" : "Repeat",
     "date" : "Date",
+    "balance" : "Balance",
     "typeDebit" : "Debit",
     "typeCredit" : "Credit"
   },

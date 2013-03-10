@@ -21,6 +21,7 @@ var OperationSchema = new Schema({
   , tags : {type: [], get: getTags, set: setTags}
   , date: {type : Date, default : Date.now}
   , user: {}
+  , balance : Number
 })
 
 mongoose.model('Operation', OperationSchema)
