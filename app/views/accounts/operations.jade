@@ -226,18 +226,18 @@ block pageScript
             $.each(items, function (index, item) {
               //add balance colors
               if(item.balance>0){
-                item.balance='<span style="color:green">'+item.balance+"</span>";
+                item.balance='<span class="ope-credit">'+item.balance+"</span>";
               }else{
-                item.balance='<span style="color:red">'+item.balance+"</span>";
+                item.balance='<span class="ope-debit">'+item.balance+"</span>";
               }               
               //add operations colors
               if(item.type=="credit"){
-                item.amount='<span style="color:green">'+item.amount+"</span>";
+                item.amount='<span class="ope-credit">'+item.amount+"</span>";
               }else{
-                item.amount='<span style="color:red">-'+item.amount+"</span>";
+                item.amount='<span class="ope-debit">-'+item.amount+"</span>";
               }         
               //date formating
-              item.date = moment(item.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('LL');
+              item.date = '<span class="ope-date">'+moment(item.date, "YYYY-MM-DDTHH:mm:ss.SSSZ").format('LL')+'</span>';
               //action buttons adding
               var id = item._id;
               var actions = '<div class="btn-group"><button type="button" class="btn" id="removeope_'+id+'" ope-name="'+item.name+'" ope-id="'+id+'"><i class="icon-trash"></i></button><button type="button" class="btn" id="editope_'+id+'" ope-id="'+id+'"><i class="icon-pencil"></i></button></div>';
@@ -274,9 +274,16 @@ block pageScript
           });  
           $('#edit-ope').modal('show');
         });
-       
-      });    
-    
-    
+        
+        $.each($('.ope-date'), function (count, item) {
+          var date = item.innerText;
+          if(moment(date).isBefore(moment())){
+            $(this).parent().parent().fadeOut(function () {
+            $(this).addClass("ope-done").fadeIn();
+            });
+          }
+        });
+        
+        
+      });
     });
-    

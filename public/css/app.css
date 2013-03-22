@@ -47,6 +47,26 @@ a.tag {
   margin: 0 10px 0 0;
 }
 
+.ope-done .ope-debit{
+  color:#FF9999;
+}
+
+.ope-done .ope-credit{
+  color:#99CC99;
+}
+
+.ope-debit{
+  color:#FF0000;
+}
+
+.ope-credit{
+  color:#008000;
+}
+
+.ope-done{
+  background-color:#FFFFD6;
+  color:#AAA;
+}
 
 .fuelux .datagrid thead {
   background-color: #f9f9f9;

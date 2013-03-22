@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
   , moment = require('moment');
   
+  
 // show operations
 exports.show = function (req, res) {
   res.render('accounts/operations', {
@@ -25,7 +26,7 @@ exports.list = function (req, res) {
         balance = balance + (operations[i].type=="credit"? operations[i].amount:-operations[i].amount)
         console.log(balance)
         console.log(operations[i])
-        operations[i].balance = balance
+        operations[i].balance = parseFloat(balance).toFixed(2)
         console.log('bal : '+operations[i].balance)
       }
       res.jsonp(operations)
@@ -44,7 +45,7 @@ exports.listall = function (req, res) {
         balance = balance + (operations[i].type=="credit"? operations[i].amount:-operations[i].amount)
         console.log(balance)
         console.log(operations[i])
-        operations[i].balance = balance
+        operations[i].balance = parseFloat(balance).toFixed(2) 
         console.log('bal : '+operations[i].balance)
       }
       res.jsonp(operations)
