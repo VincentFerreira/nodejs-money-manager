@@ -13,6 +13,8 @@ div.well.sidebar-nav
       a(href='#account'+i+'-nav', data-toggle='collapse')
         i.icon-book
         span=account.name
+        .pull-right 
+          span(class='amountAccount',id='amountAccount_'+account.id)
      li
        - var inklass = (account.id === req.param('accountId') ? 'in' : '')
        ul.collapse.nav.nav-list(id='account'+i+'-nav', class=inklass)
@@ -54,3 +56,46 @@ div(class='modal fade', id='add-compte')
         i(class='icon-pencil icon-white')
         | Save
 
+block pageScript
+  script(type="text/javascript")
+    function runYourFunctionWhenJQueryIsLoaded() {
+      if (window.$){
+          //possibly some other JQuery checks to make sure that everything is loaded here
+          initNavAmounts();
+      } else {
+          setTimeout(runYourFunctionWhenJQueryIsLoaded, 50);
+      }
+    };
+  
+    var initNavAmounts = function() {
+      $('.amountAccount').on('refresh', function(event, param1) {
+          console.log(event);
+          
+          var accountId = event.currentTarget.id.replace('amountAccount_','');
+          $.ajax({
+              url: '/users/'+!{JSON.stringify(req.user.id)}+'/accounts/'+accountId+'/balance',
+              type: "GET",
+              contentType: "application/json",
+              success: function (result) {
+                if(result.balance<=0) {
+                  $(event.currentTarget).removeClass('badge-warning badge-success').addClass('badge-important');
+                } else if (result.balance<=200) {
+                  $(event.currentTarget).removeClass('badge-important badge-success').addClass('badge-warning');
+                } else {
+                  $(event.currentTarget).removeClass('badge-warning badge-important').addClass('badge-success');
+                }
+                event.currentTarget.innerHTML = result.balance;
+                console.log(result);
+              },
+              error: function (result, e) {
+                console.log(result);
+                alert(result + " : "+ e);
+              }
+          }); 
+          
+        });
+        
+      $('.amountAccount').trigger('refresh', ['Custom', 'Event']);
+    };
+
+    runYourFunctionWhenJQueryIsLoaded();

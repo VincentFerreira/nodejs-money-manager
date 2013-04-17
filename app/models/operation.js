@@ -14,13 +14,13 @@ var setTags = function (tags) {
 var OperationSchema = new Schema({
     name: String
   , amount : Number
-  , _user: {type : Schema.ObjectId, ref : 'User'}
+  , user: {type : Schema.ObjectId, ref : 'User'}
   , account : {type : Schema.ObjectId, ref : 'Account'}
+  , category : {type : Schema.ObjectId, ref : 'Category'}
   , type : {type: String, enum: ['credit', 'debit']}
   , repeat : {type: String, enum: ['once', 'daily', 'weekly', 'monthly']}
   , tags : {type: [], get: getTags, set: setTags}
   , date: {type : Date, default : Date.now}
-  , user: {}
   , balance : Number
 })
 

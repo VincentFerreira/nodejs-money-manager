@@ -9,7 +9,7 @@ var mongoose = require('mongoose')
 var UserSchema = new Schema({
     email: String
   , username: String
-	, locale: String
+  , locale: String
   , provider: String
   , hashed_password: String
   , salt: String

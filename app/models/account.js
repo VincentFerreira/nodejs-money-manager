@@ -9,6 +9,9 @@ var AccountSchema = new Schema({
   , amount : Number
   , _user: {type : Schema.ObjectId, ref : 'User'}
   , user: {}
+  , balance : Number
 })
 
 mongoose.model('Account', AccountSchema)
+
+

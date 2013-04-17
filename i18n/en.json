@@ -3,6 +3,7 @@
   "calendar": "Calendar",
   "accounts": "Accounts",
   "profile": "Profile",
+  "settings": "Settings",
   "tour":"Tour",
   "news":"News",
   "signup" : "Signup",
@@ -27,7 +28,8 @@
   },
   "deleteOperation" : {
     "title" : "Delete operation",
-    "description" : "Are you sure to delete operation "
+    "description" : "Are you sure to delete operation ",
+    "confirmation" : "Operation removed !"
   },
   "editOperation" : {
     "title" : "Edit operation"

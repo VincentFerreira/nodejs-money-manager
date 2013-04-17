@@ -17,7 +17,7 @@ exports.show = function (req, res) {
 exports.list = function (req, res) {
   console.log("req.account.id"+req.account.id)
   Operation
-    .find({ 'user._id' : new ObjectId(req.user.id), 'account' : new ObjectId(req.account.id)})
+    .find({ 'user' : new ObjectId(req.user.id), 'account' : new ObjectId(req.account.id)})
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')
@@ -33,10 +33,11 @@ exports.list = function (req, res) {
     })
 }
 
+
 // listing of operations from all accounts of the user
 exports.listall = function (req, res) {
   Operation
-    .find({ 'user._id' : new ObjectId(req.user.id) })
+    .find({ 'user' : new ObjectId(req.user.id) })
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')
@@ -55,17 +56,13 @@ exports.listall = function (req, res) {
 // Create an operation
 exports.create = function (req, res) {
   var operation = new Operation()
-  console.log("operation, req.body : "+req.body)
-  console.log("requ.body.date = "+req.body.date)
   var day = moment(req.body.date,"DD/MM/YYYY")
   req.body.date = new Date()
   req.body.date.setFullYear(day.year(),day.month(),day.date())
-  console.log("requ.body.date = "+req.body.date)
   operation = _.extend(operation, req.body)
-  console.log("ope.date = "+operation.date)
   operation.account = req.account
   operation.user = req.user
-  
+  console.log('operation.user : '+operation.user)
   function adjustToUTC(d) {
     d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
     return d
@@ -93,7 +90,7 @@ exports.destroy = function(req, res){
   operation.remove(function(err){
     // req.flash('notice', 'Deleted successfully')
     if (err) return next(err)
-    req.session.success = 'Operation deleted!';
+    req.session.success = 'Operation deleted!'
     res.send({ 'res': 'ok' })
   })
 }  

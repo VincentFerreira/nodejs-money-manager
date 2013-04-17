@@ -13,7 +13,7 @@ exports.show = function (req, res) {
 exports.index = function (req, res) {
   
   Operation
-    .find({ 'user._id' : new ObjectId(req.user.id) })
+    .find({ 'user' : new ObjectId(req.user.id) })
     .sort({'date': 1}) // sort by date
     .exec(function(err, operations) {
       if (err) return res.render('500')

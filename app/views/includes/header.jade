@@ -34,6 +34,10 @@
                 i(class='icon-user icon-white')
                 |#{lingua.profile}
             li
+              a(href="/users/"+req.user.id+"/settings/", title="Settings")
+                i(class='icon-wrench icon-white')
+                |#{lingua.settings}
+            li
               a(href="/logout", title="logout")
                 i(class='icon-remove icon-white')
                 |#{lingua.logout}

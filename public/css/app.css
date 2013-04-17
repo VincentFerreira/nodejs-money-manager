@@ -21,6 +21,21 @@ body {
   font-size: 24px;
 }
 
+.amountAccount {
+  border-radius:9px;
+  padding-left:9px;
+  padding-left:9px;
+  color:white;
+  display: inline-block;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  padding: 2px 4px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
 .article, .comment {
   padding: 15px 0;
   border-top: 1px solid #e8e8e8;

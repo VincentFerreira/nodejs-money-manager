@@ -18,7 +18,7 @@ module.exports = function (app, passport, auth) {
   app.get('/logout', users.logout)
   app.post('/users', users.create)
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-  app.get('/users/:userId', auth.user.hasAuthorization, users.show)
+  app.get('/users/:userId', auth.requiresLogin, auth.user.hasAuthorization, users.show)
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin)
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
   app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin)
@@ -56,6 +56,8 @@ module.exports = function (app, passport, auth) {
   app.post('/users/:userId/account/', auth.requiresLogin, auth.user.hasAuthorization, accounts.create) // add account
   app.put('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.update) //update account settings
   app.del('/users/:userId/accounts/:accountId', auth.requiresLogin, auth.account.hasAuthorization, accounts.destroy) //delete account
+  app.get('/users/:userId/accounts/:accountId/balance', auth.requiresLogin, auth.account.hasAuthorization, accounts.balance) //get account balance
+
   
   /*
    * OPERATION ROUTES
@@ -89,9 +91,16 @@ module.exports = function (app, passport, auth) {
    */ 
   var settings = require('../app/controllers/settings')
   app.get('/users/:userId/accounts/:accountId/settings', auth.requiresLogin, auth.account.hasAuthorization, settings.show)   
+  app.get('/users/:userId/settings', auth.requiresLogin, auth.user.hasAuthorization, settings.showGeneral)   
   
-  
-  
+  /*
+   * CATEGORIES ROUTES
+   */ 
+  var categories = require('../app/controllers/categories')
+  app.get('/categories', auth.requiresLogin, categories.list)
+  app.get('/users/:userId/categories', auth.requiresLogin, auth.account.hasAuthorization, categories.list)
+  app.post('/users/:userId/categories', auth.requiresLogin, auth.account.hasAuthorization, categories.create)
+  app.del('/users/:userId/categories', auth.requiresLogin, auth.account.hasAuthorization, categories.destroy)
   
   app.param('accountId', function (req, res, next, id) {
     Account.findOne({ _id : id })
