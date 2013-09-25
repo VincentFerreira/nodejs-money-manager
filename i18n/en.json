@@ -26,13 +26,17 @@
     "title" : "Delete account",
     "description" : "Are you sure you want to delete account {name} ?"
   },
+  "addOperation" : {
+    "confirmation" : "Operation added !"
+  },
   "deleteOperation" : {
     "title" : "Delete operation",
     "description" : "Are you sure to delete operation ",
     "confirmation" : "Operation removed !"
   },
   "editOperation" : {
-    "title" : "Edit operation"
+    "title" : "Edit operation",
+    "confirmation" : "Operation edited !"
   },
   "operation" : {
     "name" : "Name",

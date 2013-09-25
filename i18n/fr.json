@@ -26,13 +26,17 @@
     "title" : "Supprimer le compte",
     "description" : "Etes vous sure de vouloir supprimer le compte {name} ?"
   },
+  "addOperation" : {
+    "confirmation" : "Op\u00E9ration ajout\u00E9e !"
+  },
   "deleteOperation" : {
     "title" : "Supprimer l'op\u00E9ration",
     "description" : "Etes vous sure de vouloir supprimer l'op\u00E9ration ",
     "confirmation" : "Op\u00E9ration supprim\u00E9e !"
   },
   "editOperation" : {
-    "title" : "Editer une op\u00E9ration"
+    "title" : "Editer une op\u00E9ration",
+    "confirmation" : "Op\u00E9ration edit\u00E9e !"
   },
   "operation" : {
     "name" : "Nom",

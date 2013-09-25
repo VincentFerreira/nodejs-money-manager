@@ -144,6 +144,9 @@ block pageScript
               success: function (result) {
                 $('#MyGrid').datagrid('reload');
                 $('.amountAccount').trigger('refresh');
+                $('.bottom-right').notify({
+                    message: { text: !{JSON.stringify(lingua.addOperation.confirmation)} }
+                }).show();
               },
               error: function (result, e) {
                 console.log(result);
@@ -187,6 +190,9 @@ block pageScript
               success: function (result) {
                 $('#MyGrid').datagrid('reload');
                 $('#edit-ope').modal('hide');
+                $('.bottom-right').notify({
+                    message: { text: !{JSON.stringify(lingua.editOperation.confirmation)} }
+                }).show();
                 $('.amountAccount').trigger('refresh');
               },
               error: function (result, e) {

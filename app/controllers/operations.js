@@ -73,6 +73,7 @@ exports.create = function (req, res) {
       console.log(err);
       return res.render('500')}
     else {
+      req.session.success = 'Operation added!'
       res.send({ 'res': 'ok' })
     }
   })
@@ -118,6 +119,7 @@ exports.update = function(req, res){
       console.log(err);
       return res.render('500')}
     else {
+      req.session.success = 'Operation edited!'
       res.send({ 'res': 'ok' })
     }
   })
